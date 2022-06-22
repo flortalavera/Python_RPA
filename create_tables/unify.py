@@ -11,13 +11,21 @@ print("*** Merging multiple csv files into a single pandas dataframe ***")
 mainDataFrame = pd.concat(
     map(pd.read_csv, [bibliotecas_file, cines_file, museos_file]), ignore_index=True)
 
+
 # MAIN TABLE
 mainTable = mainDataFrame[['Cod_Loc', 'IdProvincia', 'IdDepartamento',
 'Categoría', 'Provincia', 'Localidad', 'Nombre', 'Domicilio', 'CP', 'Teléfono',
 'Mail', 'Web']]
 
-print(mainTable)
 
-# RECORDS TABLE
+# FOR PROVINCE AND CATEGORY
+mainTable['total_registros_Prov_Categ'] = mainTable['Provincia'] + mainTable['Categoría']
+mainTable['total_registros_fuente'] = mainDataFrame['Fuente']
+mainTable['total_registros_categoria'] = mainTable['Categoría']
+
+totalRecordsTable = mainTable[['total_registros_categoria', 'total_registros_fuente', 'total_registros_Prov_Categ']]
+
 
 # CINES TABLE
+cinesDataFrame = pd.read_csv(cines_file)
+convertTableCines = cinesDataFrame[['Provincia', 'Pantallas', 'Butacas', 'espacio_INCAA']]
