@@ -35,7 +35,6 @@ convertTableCines = cinesDataFrame[['Provincia', 'Pantallas', 'Butacas', 'espaci
 # Create tables in Data Base
 mainDataFrame.to_sql('Main_table', con=engine, if_exists="replace", index=False)
 
-with engine.connect() as connec:
-    result = connec.execute("SELECT * FROM Main_table")
-    print(connec.fetchall())
-connec.close()
+totalRecordsTable.to_sql('Records_table', con=engine, if_exists="replace", index=False)
+
+convertTableCines.to_sql('Cines_table', con=engine, if_exists="replace", index=False)
