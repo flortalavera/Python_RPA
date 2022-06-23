@@ -1,4 +1,5 @@
 from selenium import webdriver
+from sqlalchemy import column
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pandas as pd
@@ -11,28 +12,36 @@ driver.get("https://www.bna.com.ar/Personas")
 driver.maximize_window()
 time.sleep(5)
 
-quoteDate = driver.find_element_by_class_name("fechaCot").text
-print(quoteDate)
-print("==============================")
-thTableCot = driver.find_elements_by_xpath("//*[@id='billetes']/table/thead/tr")
+# headboards
+thDate = driver.find_element_by_class_name("fechaCot").text
+thBuy = driver.find_element_by_xpath("//*[@id='billetes']/table/thead/tr/th[2]").text
+thSale = driver.find_element_by_xpath("//*[@id='billetes']/table/thead/tr/th[3]").text
 
-for th in thTableCot:
-    print(th.text)
-print("==============================")
+# Types curency
+tdDolar = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[1]/td[1]").text
+tdEuro = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[2]/td[1]").text
+tdReal = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[3]/td[1]").text
 
-trTableCot = driver.find_elements_by_xpath("//*[@id='billetes']/table/tbody/tr")
+# Values of buy
+tdDolarBuy = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[1]/td[2]").text
+tdEuroBuy = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[2]/td[2]").text
+tdRealBuy = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[3]/td[2]").text
 
-for tr in trTableCot:
-    row = tr.text
-    print(row)
+# Values of sale
+tdDolarSale = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[1]/td[3]").text
+tdEuroSale = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[2]/td[3]").text
+tdRealSale = driver.find_element_by_xpath("//*[@id='billetes']/table/tbody/tr[3]/td[3]").text
+
+
 print("==============================")
 
 # Saving data to a Dataframe
 
-quoteDataFrame = pd.DataFrame(columns=['Moneda', 'Compra', 'Venta', 'Promedio'],
-index=range(4))
+quoteDataFrame = pd.DataFrame({
+    'Moneda': [tdDolar, tdEuro, tdReal],
+    thBuy: [tdDolarBuy, tdEuroBuy, tdRealBuy],
+    thSale: [tdDolarSale, tdEuroSale, tdRealSale],
+}, index=range(3))
 
-quoteDataFrame.iloc[0] = row
 
-
-print(quoteDataFrame)
+quoteDataFrame.to_csv("quoteDataFrame.csv", index=False)
