@@ -1,4 +1,5 @@
 import pandas as pd
+from db import engine
 
 bibliotecas_file = "C:\\Cursos\\Python\\Calyx\\challengeCalyx\\input_files\\bibliotecas\\2022-junio\\bibliotecas-20-06-2022.csv"
 cines_file = "C:\\Cursos\\Python\\Calyx\\challengeCalyx\\input_files\\cines\\2022-junio\\cines-20-06-2022.csv"
@@ -29,3 +30,12 @@ totalRecordsTable = mainTable[['total_registros_categoria', 'total_registros_fue
 # CINES TABLE
 cinesDataFrame = pd.read_csv(cines_file)
 convertTableCines = cinesDataFrame[['Provincia', 'Pantallas', 'Butacas', 'espacio_INCAA']]
+
+
+# Create tables in Data Base
+mainDataFrame.to_sql('Main_table', con=engine, if_exists="replace", index=False)
+
+with engine.connect() as connec:
+    result = connec.execute("SELECT * FROM Main_table")
+    print(connec.fetchall())
+connec.close()
