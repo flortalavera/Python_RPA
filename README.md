@@ -11,15 +11,13 @@ y salas de cines argentinos.
 
 ## EJECUCIÓN
 1. Clonar este repositorio
-: https://github.com/flortalavera/Python_RPA.git
+> https://github.com/flortalavera/Python_RPA.git
 
 2. Instalar requerimientos (dentro de un ambiente virtual) 
-: pip install -r requirements.txt
+> pip install -r requirements.txt
 
 3. Ejecutar script
-: python main.py
+> python main.py
 
 4. Como resultado obtendras:
-
-## DEPLOY
-Heroku
+Los datos actualizados de todas las bibliotecas, cines y museos populares de Argentina.
