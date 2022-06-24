@@ -18,6 +18,3 @@ y salas de cines argentinos.
 
 3. Ejecutar script
 > python main.py
-
-4. Como resultado obtendras:
-Los datos actualizados de todas las bibliotecas, cines y museos populares de Argentina.
